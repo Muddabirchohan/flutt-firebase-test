@@ -10,13 +10,20 @@ class MyApp extends StatelessWidget {
 
     return MaterialApp(
       title: appTitle,
-      home: Scaffold(
-        // appBar: AppBar(
-        //   title: Text(appTitle),
-        //   backgroundColor: Colors.blue[20],
-        // ),
-        body: SignInDemo(),
-      ),
+          initialRoute: '/',
+    routes: {
+      // When navigating to the "/" route, build the FirstScreen widget.
+      '/': (context) => SignInDemo(),
+      // When navigating to the "/second" route, build the SecondScreen widget.
+      '/firebase': (context) => MyCustomForm(),
+    },
+      // home: Scaffold(
+      //   // appBar: AppBar(
+      //   //   title: Text(appTitle),
+      //   //   backgroundColor: Colors.blue[20],
+      //   // ),
+      //   body: SignInDemo(),
+      // ),
     );
   }
 }

@@ -19,28 +19,26 @@ class MyCustomFormState extends State<MyCustomForm> {
   // Note: This is a GlobalKey<FormState>,
   // not a GlobalKey<MyCustomFormState>.
   final _formKey = GlobalKey<FormState>();
-  String name = "";
-  String email = "";
-
+  String item = "";
+  String description = "";
   void sendData(){
                if (_formKey.currentState.validate()) {
+  print(item);
+
         try {
-             Scaffold.of(context)
-                      .showSnackBar(SnackBar(content: Text('Processing Data')));
+            //  Scaffold.of(context)
+            //           .showSnackBar(SnackBar(content: Text('Processing Data')));
 
                    final db = Firestore.instance;
                    db.collection("records").add({
-                     'name': name,
-                     'email': email 
+                     'item': item,
+                     'description': description 
                    });
 } on Exception catch (exception) {
   print("exception ${exception}");
 } catch (error) {
   print("error ${error}");
 }
-                  //  If the form is valid, display a Snackbar.
-       
-
                 
                 }
                 _formKey.currentState.reset();
@@ -49,27 +47,29 @@ class MyCustomFormState extends State<MyCustomForm> {
   @override
   Widget build(BuildContext context) {
     // Build a Form widget using the _formKey created above.
-    return Column(
+    return Scaffold(
+        appBar: AppBar(
+          title: Text("FIREBASE CRUD"),
+          backgroundColor: Colors.blue[20],
+        ),
+        body:  Column(
   children: <Widget>[
-        Expanded(
-      child: new Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: Text("LOGIN", 
-        style: TextStyle(
-          letterSpacing: 10,
-        fontSize: 50,
-        foreground: Paint()
-          ..style = PaintingStyle.stroke
-          ..strokeWidth = 5
-          ..color = Colors.blue[400],
-          )
-        )
-        // child: Image.asset("assets/login.jpg",
-        // height: 80,
-        // width: 200
-        // ),
-      ),
-    ),
+    //     Expanded(
+    //   child: new Padding(
+    //     padding: const EdgeInsets.all(0.0),
+    //     child: Text("Add To Firebase", 
+    //     style: TextStyle(
+    //       letterSpacing: 10,
+    //     fontSize: 20,
+    //     // foreground: Paint()
+    //     //   ..style = PaintingStyle.stroke
+    //     //   ..strokeWidth = 2
+    //     //   ..color = Colors.blue[400],
+    //       )
+    //     )
+     
+    //   ),
+    // ),
     Expanded(
       child: new Padding(
         padding: const EdgeInsets.all(20.0),
@@ -84,7 +84,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                 return 'Please enter some text';
               }
               setState(() {
-                name = value;
+                item = value;
               });
               return null;
             },
@@ -95,7 +95,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                 return 'Please enter some text';
               }
               setState(() {
-                email = value;
+                description = value;
               });
               return null;
             },
@@ -116,9 +116,7 @@ class MyCustomFormState extends State<MyCustomForm> {
       ),
     )
   ],
-); 
-    
-    
-
+)
+      ); 
   }
 }
