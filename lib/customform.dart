@@ -24,14 +24,24 @@ class MyCustomFormState extends State<MyCustomForm> {
 
   void sendData(){
                if (_formKey.currentState.validate()) {
+        try {
+             Scaffold.of(context)
+                      .showSnackBar(SnackBar(content: Text('Processing Data')));
+
                    final db = Firestore.instance;
                    db.collection("records").add({
                      'name': name,
                      'email': email 
                    });
-                  // If the form is valid, display a Snackbar.
-                  // Scaffold.of(context)
-                  //     .showSnackBar(SnackBar(content: Text('Processing Data')));
+} on Exception catch (exception) {
+  print("exception ${exception}");
+} catch (error) {
+  print("error ${error}");
+}
+                  //  If the form is valid, display a Snackbar.
+       
+
+                
                 }
                 _formKey.currentState.reset();
   }
@@ -39,7 +49,31 @@ class MyCustomFormState extends State<MyCustomForm> {
   @override
   Widget build(BuildContext context) {
     // Build a Form widget using the _formKey created above.
-    return Form(
+    return Column(
+  children: <Widget>[
+        Expanded(
+      child: new Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Text("LOGIN", 
+        style: TextStyle(
+          letterSpacing: 10,
+        fontSize: 50,
+        foreground: Paint()
+          ..style = PaintingStyle.stroke
+          ..strokeWidth = 5
+          ..color = Colors.blue[400],
+          )
+        )
+        // child: Image.asset("assets/login.jpg",
+        // height: 80,
+        // width: 200
+        // ),
+      ),
+    ),
+    Expanded(
+      child: new Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Form(
       key: _formKey,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -67,14 +101,24 @@ class MyCustomFormState extends State<MyCustomForm> {
             },
           ),
           Padding(
+
             padding: const EdgeInsets.symmetric(vertical: 16.0),
-            child: RaisedButton(
+            child: Center(
+              child: RaisedButton(
               onPressed: sendData,
               child: Text('Submit'),
-            ),
+            )
+            ), 
           ),
         ],
       ),
-    );
+    ),
+      ),
+    )
+  ],
+); 
+    
+    
+
   }
 }
