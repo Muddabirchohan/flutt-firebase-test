@@ -1,5 +1,7 @@
 import "package:flutter/material.dart";
 import "package:firebaseflutt/customform.dart";
+import "package:firebaseflutt/tabs.dart";
+
 import "package:firebaseflutt/googlesignin.dart";
 void main() => runApp(MyApp());
 
@@ -15,7 +17,7 @@ class MyApp extends StatelessWidget {
       // When navigating to the "/" route, build the FirstScreen widget.
       '/': (context) => SignInDemo(),
       // When navigating to the "/second" route, build the SecondScreen widget.
-      '/firebase': (context) => MyCustomForm(),
+      '/firebase': (context) => TabBarDemo(),
     },
       // home: Scaffold(
       //   // appBar: AppBar(

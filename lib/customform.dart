@@ -1,7 +1,6 @@
 import "package:flutter/material.dart";
 import "package:cloud_firestore/cloud_firestore.dart";
-
-
+import "package:firebaseflutt/lists.dart";
 // Create a Form widget.
 class MyCustomForm extends StatefulWidget {
   @override
@@ -10,25 +9,57 @@ class MyCustomForm extends StatefulWidget {
   }
 }
 
-// Create a corresponding State class.
-// This class holds data related to the form.
+
 class MyCustomFormState extends State<MyCustomForm> {
-  // Create a global key that uniquely identifies the Form widget
-  // and allows validation of the form.
-  //
-  // Note: This is a GlobalKey<FormState>,
-  // not a GlobalKey<MyCustomFormState>.
+
   final _formKey = GlobalKey<FormState>();
   String item = "";
   String description = "";
+
+//   List datalist;
+   
+//       Future<void> getDataFromFirebase() async { 
+//       try{
+//                 var data = [];
+//         return await Firestore
+//          .instance
+//       .collection("records")
+//       .getDocuments()
+//       .then((QuerySnapshot snapshot) {
+//     snapshot.documents.forEach((f) => {
+//         data.add(f.data),
+//       setState((){
+//         datalist = data;
+//       })
+//     }
+
+//     );
+//           // print(data);
+
+//   });
+        
+//       }
+//       catch(e) {
+//         print("exceppttiooonnn");
+//           return "failed to load time";
+//       }
+
+// }
+
+
+
+
+  // void clearData(){
+  //   setState(() {
+  //     datalist= [];
+  //   });
+  // }
+
+
+
   void sendData(){
                if (_formKey.currentState.validate()) {
-  print(item);
-
         try {
-            //  Scaffold.of(context)
-            //           .showSnackBar(SnackBar(content: Text('Processing Data')));
-
                    final db = Firestore.instance;
                    db.collection("records").add({
                      'item': item,
@@ -44,32 +75,15 @@ class MyCustomFormState extends State<MyCustomForm> {
                 _formKey.currentState.reset();
   }
 
+
   @override
   Widget build(BuildContext context) {
     // Build a Form widget using the _formKey created above.
     return Scaffold(
-        appBar: AppBar(
-          title: Text("FIREBASE CRUD"),
-          backgroundColor: Colors.blue[20],
-        ),
+                resizeToAvoidBottomPadding: false,
         body:  Column(
   children: <Widget>[
-    //     Expanded(
-    //   child: new Padding(
-    //     padding: const EdgeInsets.all(0.0),
-    //     child: Text("Add To Firebase", 
-    //     style: TextStyle(
-    //       letterSpacing: 10,
-    //     fontSize: 20,
-    //     // foreground: Paint()
-    //     //   ..style = PaintingStyle.stroke
-    //     //   ..strokeWidth = 2
-    //     //   ..color = Colors.blue[400],
-    //       )
-    //     )
-     
-    //   ),
-    // ),
+
     Expanded(
       child: new Padding(
         padding: const EdgeInsets.all(20.0),
@@ -110,12 +124,50 @@ class MyCustomFormState extends State<MyCustomForm> {
             )
             ), 
           ),
+          //  Padding(
+
+          //   padding: const EdgeInsets.symmetric(vertical: 1.0),
+          //   child: Column(
+          //     children: <Widget>[ RaisedButton(
+          //     onPressed: getDataFromFirebase,
+          //     child: Text('fetch'),
+          //   ),
+          //   RaisedButton(
+          //     onPressed: clearData,
+          //     child: Text('clear'),
+          //   ),
+
+
+          //     ]
+          //   ), 
+          // ),
         ],
       ),
     ),
       ),
-    )
+    ),
+    //        Expanded(
+    //             child: ListView.builder(
+    //               // shrinkWrap: true,
+    //               itemCount: datalist == null ?  0 :  datalist.length,
+    //               itemBuilder: (BuildContext context, int index) {
+    // return new Column(
+    //   children: <Widget>[
+    //     new ListTile(
+    //       title: new Text(" ${datalist.elementAt(index)['item']}"),
+    //       subtitle: new Text(" ${datalist.elementAt(index)['description']}"),
+    //     ),
+    //     new Divider(
+    //       height: 2.0,
+    //     ),
+    //   ],
+    // );
+    //               }
+    //             ),
+    // ),
+
   ],
+
 )
       ); 
   }
